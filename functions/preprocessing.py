@@ -22,10 +22,10 @@ def clean_rows(df):
     
     return df
 
-async def translate_text(text: str):
+async def translate_text(text: str, language: str):
     translator = Translator()
     
-    translated = await translator.translate(text, src='da', dest='en')
+    translated = await translator.translate(text, src=language, dest='en')
     
     return str(translated.text).strip()
 

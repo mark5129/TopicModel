@@ -49,8 +49,8 @@ for i in range(len(file_names)):
     # Cleans the text_df
     text_df = clean_rows(text_df) # Clean the rows of the dataframe
 
-    if language == 'da':
-        text_df['Content'] = text_df['Content'].apply(lambda x: asyncio.run(translate_text(x)))
+    if language != 'en':
+        text_df['Content'] = text_df['Content'].apply(lambda x: asyncio.run(translate_text(x, language)))
     
     # Remove stopwords from the text
     text_df['Content'] = text_df['Content'].apply(lambda x: remove_stopwords(x, 'english'))

@@ -6,7 +6,7 @@ filenames: ['pro_media.csv', 'reg_media.csv', 'sci_media.csv']
 # Define the names of the sources of documents used in this run
 source_names: ['pro_media', 'reg_media', 'sci_media']
 
-# Define the language of each source
+# Define the language of each source: 'da', 'en', 'de', etc.
 languages: ['da', 'da', 'en']
 
 
