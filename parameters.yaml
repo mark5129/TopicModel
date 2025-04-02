@@ -1,0 +1,17 @@
+# define the parameters for the model
+
+# Define the filenames that should be used in this run of the pipeline
+filenames: ['pro_media.csv', 'reg_media.csv', 'sci_media.csv']
+
+# Define the names of the sources of documents used in this run
+source_names: ['pro_media', 'reg_media', 'sci_media']
+
+# Define the language of each source
+languages: ['da', 'da', 'en']
+
+
+# Hyperparameters for the models:
+num_topics: 10
+random_state: 42
+max_features: 1000
+n_top_words: 10
