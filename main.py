@@ -2,13 +2,17 @@
 import yaml
 import pandas as pd
 import os
+import seaborn as sns
 
 # Import custom functions
+from functions.log import *
 from functions.preprocessing import *
 from functions.evaluating import *
 from functions.modelling import *
-from functions.plotting import *
-from functions.log import *
+from functions.plotting.Cluster_plot import *
+from functions.plotting.ClusterSource_outlines import *
+from functions.plotting.topic_source_plot import *
+
 
 # Load parameters from YAML file
 with open('parameters.yaml', 'r') as file:
@@ -113,12 +117,20 @@ for model in which_model:
 
 print('Clustering is done')
 
+
+# Generate a color palette with as many colors as there are sources
+color_palette = sns.color_palette("hsv", len(sources))
+# Create a dictionary mapping each source to a specific color
+palette = {source: color_palette[i] for i, source in enumerate(sources)}
+
 for model in which_model:
     embeddings = pd.read_csv(f'outputs/modelling/{current_id}_merged_{model}_embeddings.csv')
     kmeans = pd.read_csv(f'outputs/modelling/{current_id}_merged_{model}_Kmeans.csv')
 
-    # data_mapplot_with_naming(kmeans, embeddings, df, current_id, 'merged', model)
-    # topic_source_plot(kmeans, current_id, 'merged', model)
-    # create_bokeh_plot(kmeans, embeddings, df, current_id, 'merged', model)
-    # outline_plot(kmeans, embeddings, df, current_id, 'merged', model)
-    # cluster_plot(kmeans, embeddings, df, current_id, 'merged', model)
+    # Global variables to store axis limits across multiple plots
+    global_x_min, global_x_max = None, None
+    global_y_min, global_y_max = None, None
+
+    topic_source_plot(kmeans, current_id, 'merged', model, palette)
+    global_x_min, global_x_max, global_y_min, global_y_max = outline_plot(kmeans, embeddings, df, current_id, 'merged', model, palette, global_x_min, global_x_max, global_y_min, global_y_max)
+    global_x_min, global_x_max, global_y_min, global_y_max = cluster_plot(kmeans, embeddings, df, current_id, 'merged', model, global_x_min, global_x_max, global_y_min, global_y_max)
